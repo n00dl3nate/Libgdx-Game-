@@ -15,8 +15,9 @@ public class Player extends Entity {
 
     Texture image;
 
-    public Player(float x, float y,  GameMap map) {
-        super(x, y, EntityType.Player , map);
+
+    public void create (EntitySnapShot snapShot, EntityType entityType,GameMap map){
+        super.create(snapShot,type,map);
         image = new Texture("player.png");
     }
 

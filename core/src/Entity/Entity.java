@@ -12,8 +12,9 @@ public abstract class Entity {
     protected GameMap map;
     protected boolean grounded = false;
 
-    public Entity(float x, float y, EntityType type, GameMap map) {
-        this.pos = new Vector2(x,y);
+
+    public void create(EntitySnapShot snapShot,EntityType entityType, GameMap gameMap) {
+        this.pos = new Vector2(snapShot.getX(), snapShot.getY());
         this.type = type;
         this.map = map;
     }
@@ -45,6 +46,12 @@ public abstract class Entity {
             this.pos.x = newX;
         }
     }
+
+
+    public EntitySnapShot getSaveSnapshot () {
+        return new EntitySnapShot(type.getId(), pos.x, pos.y);
+    }
+
 
     public float getX(){
         return pos.x;
