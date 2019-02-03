@@ -16,7 +16,7 @@ public class Player extends Entity {
     Texture image;
 
 
-    public void create (EntitySnapShot snapShot, EntityType entityType,GameMap map){
+    public void create (EntitySnapShot snapShot, EntityType type,GameMap map){
         super.create(snapShot,type,map);
         image = new Texture("player.png");
     }
@@ -44,5 +44,12 @@ public class Player extends Entity {
     public void render(SpriteBatch batch) {
         batch.draw(image,pos.x,pos.y,getWidth(),getHeight());
 
+    }
+
+    @Override
+    public EntitySnapShot getSaveSnapshot(){
+        EntitySnapShot snapShot = super.getSaveSnapshot();
+//        snapShot.putFloat("spawnRadius,value");
+        return snapShot;
     }
 }

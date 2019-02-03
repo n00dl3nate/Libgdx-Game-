@@ -1,0 +1,8 @@
+[
+{
+	class: Entity.EntitySnapShot
+	type: player
+	x: 100
+	y: 180
+}
+]

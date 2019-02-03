@@ -13,7 +13,7 @@ public abstract class Entity {
     protected boolean grounded = false;
 
 
-    public void create(EntitySnapShot snapShot,EntityType entityType, GameMap gameMap) {
+    public void create(EntitySnapShot snapShot,EntityType type, GameMap map) {
         this.pos = new Vector2(snapShot.getX(), snapShot.getY());
         this.type = type;
         this.map = map;

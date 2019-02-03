@@ -14,7 +14,7 @@ public enum EntityType {
     Player("player",Player.class ,14,32,40);
 
     private String id;
-    private Class loaderClass;
+    private Class<? extends Entity> loaderClass;
     private int width, height;
     private float weight;
 
@@ -41,10 +41,10 @@ public enum EntityType {
     public float getWeight() {
         return weight;
     }
+
     public static Entity createEntityUsingSnapshot (EntitySnapShot entitySnapshot, GameMap map) {
         EntityType type = entityTypes.get(entitySnapshot.type);
         try {
-            @SuppressWarnings("unchecked")
             Entity entity = ClassReflection.newInstance(type.loaderClass);
             entity.create(entitySnapshot, type, map);
             return entity;
@@ -57,6 +57,7 @@ public enum EntityType {
     private static HashMap<String, EntityType> entityTypes;
 
     static{
+        entityTypes = new HashMap<String, EntityType>();
         for(EntityType type : EntityType.values())
             entityTypes.put(type.id,type);
     }

@@ -1,10 +1,13 @@
 package World;
 
 import Entity.Entity;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+import Entity.Entityloader;
 import Entity.Player;
+import com.badlogic.gdx.math.Vector3;
 
 
 import java.util.ArrayList;
@@ -17,22 +20,33 @@ public abstract class GameMap {
 
     public GameMap() {
         entities = new ArrayList<Entity>();
+        entities.addAll(Entityloader.loadEntities("basic",this, entities));
 
     }
 
     public void render (OrthographicCamera camera, SpriteBatch batch){
         for (Entity entity : entities){
             entity.render(batch);
+            Vector3 position = camera.position;
+            position.x = entity.getPos().x;
+            position.y = entity.getPos().y;
+            camera.position.set(position);
+            camera.update();
         }
+
     }
 
-    public void update (float delta){
-        for(Entity entity : entities){
-            entity.update(delta,-9.8f);
+    public void update (float delta) {
+        for (Entity entity : entities) {
+            entity.update(delta, -9.8f);
         }
-
+        if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+            Entityloader.saveEntities("basic", entities);
+        }
     }
-    public abstract void dispose ();
+    public void dispose (){
+//        Entityloader.saveEntities("basic",entities);
+    }
 
     /**
      * Gets a tile by pixel Location within the game world
