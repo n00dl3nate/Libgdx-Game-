@@ -1,0 +1,160 @@
+
+Spritesheet.png
+size: 512,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+R-adventurer-fall-00
+  rotate: false
+  xy: 2, 80
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+R-adventurer-fall-01
+  rotate: false
+  xy: 2, 41
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+R-adventurer-jump-00
+  rotate: false
+  xy: 54, 80
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+R-adventurer-jump-01
+  rotate: false
+  xy: 2, 2
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+R-adventurer-jump-02
+  rotate: false
+  xy: 54, 41
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+R-adventurer-jump-03
+  rotate: false
+  xy: 106, 80
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+R-adventurer-smrslt-00
+  rotate: false
+  xy: 54, 2
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+R-adventurer-smrslt-04
+  rotate: false
+  xy: 54, 2
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+R-adventurer-smrslt-01
+  rotate: false
+  xy: 106, 41
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+R-adventurer-smrslt-02
+  rotate: false
+  xy: 158, 80
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+R-adventurer-smrslt-03
+  rotate: false
+  xy: 106, 2
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+adventurer-fall-00
+  rotate: false
+  xy: 158, 41
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+adventurer-fall-01
+  rotate: false
+  xy: 210, 80
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+adventurer-jump-00
+  rotate: false
+  xy: 158, 2
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+adventurer-jump-01
+  rotate: false
+  xy: 210, 41
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+adventurer-jump-02
+  rotate: false
+  xy: 262, 80
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+adventurer-jump-03
+  rotate: false
+  xy: 210, 2
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+adventurer-smrslt-00
+  rotate: false
+  xy: 262, 41
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+adventurer-smrslt-04
+  rotate: false
+  xy: 262, 41
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+adventurer-smrslt-01
+  rotate: false
+  xy: 314, 80
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+adventurer-smrslt-02
+  rotate: false
+  xy: 262, 2
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+adventurer-smrslt-03
+  rotate: false
+  xy: 314, 41
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1

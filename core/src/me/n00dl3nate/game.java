@@ -21,7 +21,7 @@ public class game extends ApplicationAdapter {
         batch = new SpriteBatch();
         cam = new OrthographicCamera();
         cam.setToOrtho(false, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        cam.update();
+        cam.zoom -= .7;
 		gameMap = new TiledGameMap();
 
 	}
@@ -33,7 +33,7 @@ public class game extends ApplicationAdapter {
 
 		if (Gdx.input.isTouched()){
 		    cam.translate(-Gdx.input.getDeltaX(), Gdx.input.getDeltaY());
-		    cam.update();
+//		    cam.update();
         }
         if(Gdx.input.justTouched()){
             Vector3 pos = cam.unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
@@ -43,7 +43,7 @@ public class game extends ApplicationAdapter {
                 System.out.println("Clicked tile" + type.getId() + "  " + type.getName() + "  ");
             }
         }
-        cam.update();
+//        cam.update();
         gameMap.update(Gdx.graphics.getDeltaTime());
 		gameMap.render(cam, batch);
 	}
