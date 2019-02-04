@@ -45,7 +45,8 @@ public abstract class GameMap {
         }
     }
     public void dispose (){
-//        Entityloader.saveEntities("basic",entities);
+        Entityloader.saveEntities("basic",entities);
+
     }
 
     /**

@@ -4,14 +4,18 @@ import java.util.HashMap;
 
 public enum TileType {
 
-    GRASS(1,true,"Grass"),
-    DIRT(2,true,"Dirt"),
-    SKY(3,false,"Sky"),
-    Lava(4,true,"Lava"),
-    CLOUD(5,true,"Cloud"),
-    STONE(6,true,"Stone");
+//    GRASS(1,true,"Grass"),
+//    DIRT(2,true,"Dirt"),
+//    SKY(3,false,"Sky"),
+//    Lava(4,true,"Lava"),
+//    CLOUD(5,true,"Cloud"),
+//    STONE(6,true,"Stone");
 
-    public static  final int TILE_SIZE = 16;
+    GrassGround(177,true,"GrassGround"),
+    FloatingGrassGround(32,true,"FloatingGrassGround"),
+    WoodBridge(195,true,"WoodBridge");
+
+    public static  final int TILE_SIZE = 32;
 
     private int id;
     private boolean collidable;

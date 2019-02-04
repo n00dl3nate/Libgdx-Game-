@@ -1,8 +1,14 @@
 [
 {
 	class: Entity.EntitySnapShot
+	type: blueBot
+	x: 5.3097887
+	y: 360
+}
+{
+	class: Entity.EntitySnapShot
 	type: player
-	x: 100
-	y: 180
+	x: 1300
+	y: 1900
 }
 ]

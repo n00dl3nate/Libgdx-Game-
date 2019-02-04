@@ -3,71 +3,137 @@ package Entity;
 import World.GameMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-
-import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.REVERSED;
-
 
 public class Player extends Entity {
 
-    private static final int SPEED = 80;
-    private static final int JUMP_VELOCITY = 5;
+    public enum State { FALLING, JUMPING, STANDING, RUNNING, GROWING, DEAD };
+    public State currentState;
+    public State previousState;
+
+    private static final int SPEED = 120;
+    private static final int JUMP_VELOCITY = 6;
 
     private TextureAtlas textureAtlas;
     private TextureAtlas textureAtlas2;
-    private Animation<TextureRegion> animation;
-    private Array<TextureAtlas.AtlasRegion> idleRegions;
-    private Array<TextureAtlas.AtlasRegion> runRegions;
-    private Array<TextureAtlas.AtlasRegion> runReverseRegions;
+
+    private Animation<TextureRegion> idleAnimation;
+    private Animation<TextureRegion> runAnimation;
+    private Animation<TextureRegion> jumpAnimation;
+    private Animation<TextureRegion> bigJumpAnimation;
+    private Animation<TextureRegion> fallAnimation;
+
+//    private SpriteBatch batch;
+
+    private Vector2 previousPosition;
+    private float stateTimer;
+    private boolean runningRight;
+    private boolean isDead;
+
+
 
     private float elapsedTime = 0f;
-    Texture image;
-
-
 
     public void create (EntitySnapShot snapShot, EntityType type,GameMap map){
         super.create(snapShot,type,map);
+        runningRight = true;
         textureAtlas = new TextureAtlas(Gdx.files.internal("PlayerSpriteSheet/Spritesheet.atlas"));
         textureAtlas2 = new TextureAtlas(Gdx.files.internal("JumpSpriteSheet/SpriteSheet.atlas"));
-        runRegions = textureAtlas.findRegions("adventurer-run-00");
-        runReverseRegions = textureAtlas.findRegions("adventurer-run-reverse-00");
-        idleRegions = textureAtlas.findRegions("adventurer-idle-00");
-        animation = new Animation(1f/5f, idleRegions);
+        idleAnimation = new Animation(1f/10f, textureAtlas.findRegions("adventurer-idle-00"));
+        runAnimation = new Animation(1f/10f, textureAtlas.findRegions("adventurer-run-00"));
+        jumpAnimation = new Animation(1f/10f, textureAtlas2.findRegions("adventurer-jump-00"));
+        fallAnimation = new Animation(1f/10f, textureAtlas2.findRegions("adventurer-fall-00"));
+        previousPosition = new Vector2();
     }
+
+
+
 
     @Override
     public void update(float deltaTime, float gravity) {
-        animation = new Animation(1f/5f, idleRegions);
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && grounded){
-            this.velocityY += JUMP_VELOCITY * getWeight();
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && !grounded && this.velocityY > 0){
-            this.velocityY += JUMP_VELOCITY * getWeight() * deltaTime;
-        }
-        super.update(deltaTime,gravity);
+        previousPosition.x = this.pos.x;
+        previousPosition.y = this.pos.y;
+//        currentState = State.STANDING;
+        previousState = currentState;
+        currentState = State.STANDING;
 
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
             moveX(-SPEED * deltaTime);
-            animation = new Animation(1f/5f, runReverseRegions);
-
+            currentState = State.RUNNING;
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             moveX(SPEED * deltaTime);
-            animation = new Animation(1f/5f, runRegions);
+            currentState = State.RUNNING;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && grounded){
+            this.velocityY += JUMP_VELOCITY * getWeight();
+            currentState = State.JUMPING;
+        }
+        else if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && !grounded && this.velocityY > 0){
+            this.velocityY += JUMP_VELOCITY * getWeight() * deltaTime;
+            currentState = State.JUMPING;
+        }
+        super.update(deltaTime,gravity);
+
+        if(!grounded && this.pos.y > previousPosition.y){
+            currentState = State.JUMPING;
         }
 
+        if(!grounded && this.pos.y < previousPosition.y){
+            currentState = State.FALLING;
+        }
     }
+
+    public TextureRegion GetAnimationType(){
+        TextureRegion result;
+        result = idleAnimation.getKeyFrame(elapsedTime,true);
+
+        switch (currentState) {
+            case RUNNING:
+                result = runAnimation.getKeyFrame(elapsedTime,true);
+                break;
+            case JUMPING:
+                result = jumpAnimation.getKeyFrame(elapsedTime,false);
+                break;
+            case FALLING:
+                result = fallAnimation.getKeyFrame(elapsedTime,false);
+                break;
+            case STANDING:
+                result = idleAnimation.getKeyFrame(elapsedTime,true);
+        }
+        isRunningRight();
+
+        if(runningRight == false && !result.isFlipX()){
+            result.flip(true,false);
+        }
+        if(runningRight == true && result.isFlipX()){
+            result.flip(true,false);
+        }
+
+        return result;
+    }
+
+    public void isRunningRight(){
+        if(this.pos.x > previousPosition.x){
+            runningRight = true;
+        }
+        else if(this.pos.x < previousPosition.x){
+            runningRight = false;
+        }
+    }
+
 
     @Override
     public void render(SpriteBatch batch) {
         elapsedTime += Gdx.graphics.getDeltaTime();
-        TextureRegion currentFrame = animation.getKeyFrame(elapsedTime, true);
-        batch.draw(currentFrame,pos.x,pos.y,getWidth(),getHeight());
+        TextureRegion animation = GetAnimationType();
+
+        batch.draw(animation,pos.x,pos.y,getWidth(),getHeight());
 
     }
 
