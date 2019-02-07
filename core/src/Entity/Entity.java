@@ -3,6 +3,7 @@ package Entity;
 import World.GameMap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import tools.CollisionRect;
 
 public abstract class Entity {
 
@@ -11,17 +12,20 @@ public abstract class Entity {
     protected float velocityY = 0;
     protected GameMap map;
     protected boolean grounded = false;
+    private CollisionRect rect;
 
 
     public void create(EntitySnapShot snapShot,EntityType type, GameMap map) {
         this.pos = new Vector2(snapShot.getX(), snapShot.getY());
         this.type = type;
         this.map = map;
+        this.rect = new CollisionRect(pos.x, pos.y, type.getWidth(), type.getHeight());
+
     }
 
     public void update (float deltaTime, float gravity) {
+        rect.move(this.pos.x, this.pos.y);
         float newY = pos.y;
-
         this.velocityY += gravity * deltaTime * getWeight();
         newY += this.velocityY * deltaTime;
 
@@ -45,6 +49,10 @@ public abstract class Entity {
         if(!map.doesReactCollideWithMap(newX,pos.y,getWidth(),getHeight())){
             this.pos.x = newX;
         }
+    }
+
+    public CollisionRect getCollisionRect(){
+        return rect;
     }
 
 

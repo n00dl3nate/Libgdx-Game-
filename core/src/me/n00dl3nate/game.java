@@ -1,5 +1,6 @@
 package me.n00dl3nate;
 
+import Entity.Player;
 import World.GameMap;
 import World.TileType;
 import World.TiledGameMap;
@@ -26,10 +27,13 @@ public class game extends ApplicationAdapter {
 
 	}
 
+
+
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
 		if (Gdx.input.isTouched()){
 		    cam.translate(-Gdx.input.getDeltaX(), Gdx.input.getDeltaY());

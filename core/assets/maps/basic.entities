@@ -2,8 +2,8 @@
 {
 	class: Entity.EntitySnapShot
 	type: blueBot
-	x: 5.3097887
-	y: 360
+	x: 4928
+	y: 2432
 }
 {
 	class: Entity.EntitySnapShot

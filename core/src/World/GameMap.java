@@ -25,6 +25,16 @@ public abstract class GameMap {
     }
 
     public void render (OrthographicCamera camera, SpriteBatch batch){
+        for (int i = 0; i < entities.size()-1 ; i++) {
+            for (int j = 1; j < entities.size() ; j++) {
+                if(entities.get(i).getCollisionRect().collidesWith(entities.get(j).getCollisionRect())){
+                    System.out.println("hit");
+                }
+
+            }
+            }
+
+
         for (Entity entity : entities){
             entity.render(batch);
             Vector3 position = camera.position;

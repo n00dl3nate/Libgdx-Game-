@@ -24,7 +24,6 @@ public class TiledGameMap extends GameMap {
     public void render(OrthographicCamera camera, SpriteBatch batch) {
         tiledMapRender.setView(camera);
         tiledMapRender.render();
-
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         super.render(camera,batch);
