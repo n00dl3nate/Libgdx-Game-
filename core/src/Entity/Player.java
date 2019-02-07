@@ -31,8 +31,6 @@ public class Player extends Entity {
     private Animation<TextureRegion> bigJumpAnimation;
     private Animation<TextureRegion> fallAnimation;
 
-    private CollisionRect rect;
-
     private Vector2 previousPosition;
     private float stateTimer;
     private boolean runningRight;
@@ -51,7 +49,6 @@ public class Player extends Entity {
         jumpAnimation = new Animation(1f / 10f, textureAtlas2.findRegions("adventurer-jump-00"));
         fallAnimation = new Animation(1f / 10f, textureAtlas2.findRegions("adventurer-fall-00"));
         previousPosition = new Vector2();
-        rect = new CollisionRect(pos.x, pos.y, type.getWidth(), type.getHeight());
     }
 
 
@@ -59,7 +56,6 @@ public class Player extends Entity {
     public void update(float deltaTime, float gravity) {
         previousPosition.x = this.pos.x;
         previousPosition.y = this.pos.y;
-        rect.move(this.pos.x, this.pos.y);
         previousState = currentState;
         currentState = State.STANDING;
 
@@ -117,11 +113,6 @@ public class Player extends Entity {
 
         return result;
     }
-
-    public CollisionRect getCollisionRect(){
-        return rect;
-    }
-
 
     public void isRunningRight() {
         if (this.pos.x > previousPosition.x) {

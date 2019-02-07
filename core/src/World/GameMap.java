@@ -60,7 +60,7 @@ public abstract class GameMap {
     }
 
     /**
-     * Gets a tile by pixel Location within the game world
+     * Gets a tile by pixel Location within the SideScrollingGame world
      * @param layer
      * @param x
      * @param y

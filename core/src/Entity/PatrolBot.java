@@ -24,8 +24,6 @@ public class PatrolBot extends Entity {
     private Timer timer = new Timer("Timer");
     public int movement;
 
-    private CollisionRect rect;
-
     private float elapsedTime = 0f;
 
     public void create (EntitySnapShot snapShot, EntityType type, GameMap map) {
@@ -35,14 +33,13 @@ public class PatrolBot extends Entity {
         idleRegions = textureAtlas.findRegions("azul");
         animation = new Animation(1f/5f, idleRegions);
         movement = 0;
-        rect = new CollisionRect(pos.x, pos.y, type.getWidth(), type.getHeight());
 
     }
 
     @Override
     public void update(float deltaTime, float gravity) {
         float newY = pos.y;
-        rect.move(this.pos.x, this.pos.y);
+
 
         this.velocityY += gravity * deltaTime * getWeight();
         newY += this.velocityY * deltaTime;
@@ -61,9 +58,6 @@ public class PatrolBot extends Entity {
         moveAmount(150,deltaTime);
     }
 
-    public CollisionRect getCollisionRect(){
-        return rect;
-    }
 
     @Override
     public void render(SpriteBatch batch) {
