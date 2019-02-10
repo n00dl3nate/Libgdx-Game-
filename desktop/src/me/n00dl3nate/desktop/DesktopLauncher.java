@@ -7,7 +7,7 @@ import me.n00dl3nate.SideScrollingGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.resizable = false;
+//		config.resizable = false;
 		new LwjglApplication(new SideScrollingGame(), config);
 	}
 }

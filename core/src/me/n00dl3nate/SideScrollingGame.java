@@ -1,5 +1,6 @@
 package me.n00dl3nate;
 
+import Screens.GameOverScreen;
 import Screens.GameScreen;
 import Screens.MainMenuScreen;
 import com.badlogic.gdx.Game;
@@ -18,7 +19,7 @@ public class SideScrollingGame extends Game {
 	@Override
 	public void create () {
         batch = new SpriteBatch();
-        this.setScreen(new MainMenuScreen(game));
+        this.setScreen(new GameOverScreen(game));
 	}
 
 	@Override

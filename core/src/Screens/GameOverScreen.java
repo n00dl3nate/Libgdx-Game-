@@ -16,18 +16,19 @@ public class GameOverScreen implements Screen {
     Texture gameOverBanner;
     Texture exitActive;
     Texture exitDeactive;
-    Texture playActive;
-    Texture playDeactive;
+    Texture tryAgainActive;
+    Texture tryAgainDeactive;
     Vector2 pos;
     public SpriteBatch batch;
 
-    private static final int BANNER_WIDTH = 350;
-    private static final int BANNER_HEIGHT = 350;
+    private static final int BANNER_WIDTH = 380;
+    private static final int BANNER_HEIGHT = 280;
 
     private static final int QUIT_BUTTON_WIDTH = 175;
     private static final int QUIT_BUTTON_HEIGHT = 63;
-    private static final int START_BUTTON_WIDTH = 224;
-    private static final int START_BUTTON_HEIGHT = 63;
+
+    private static final int TRYAGAIN_BUTTON_WIDTH = 357;
+    private static final int TRYAGAIN_BUTTON_HEIGHT = 63;
 
 
 
@@ -37,8 +38,8 @@ public class GameOverScreen implements Screen {
 
     public GameOverScreen(SideScrollingGame game) {
         this.game = game;
-        playActive = new Texture("buttons/Start.png");
-        playDeactive = new Texture("buttons/StartActivate.png");
+        tryAgainActive = new Texture("buttons/TryAgain.png");
+        tryAgainDeactive = new Texture("buttons/TryAgainActivate.png");
         exitDeactive = new Texture("buttons/QuitActivate.png");
         exitActive = new Texture("buttons/Quit.png");
         gameOverBanner = new Texture("GameOverLogo.png");
@@ -61,29 +62,30 @@ public class GameOverScreen implements Screen {
         }
         camera.update();
 //        System.out.println("Yes");
-        Gdx.gl.glClearColor(.3f, .3f, .1f, 0.5f);
+        Gdx.gl.glClearColor(.211f, .211f, .211f, 0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
 
         int centreWidth = Gdx.graphics.getWidth()/2;
         int centreHeight = Gdx.graphics.getHeight()/2;
 
-        int xQuit = centreWidth + 90;
-        int yQuit = centreHeight - 170;
-        int xStart = centreWidth - 260;
-        int yStart = centreHeight - 170;
+        int xQuit = centreWidth - QUIT_BUTTON_WIDTH/2;
+        int yQuit = centreHeight - QUIT_BUTTON_HEIGHT*3;
+        
+        int xTryAgain = centreWidth - TRYAGAIN_BUTTON_WIDTH / 2;
+        int yTryAgain = centreHeight - TRYAGAIN_BUTTON_HEIGHT * 2;
 
-        if(Gdx.input.getX() < xStart + START_BUTTON_WIDTH && Gdx.input.getX() > xStart && Gdx.graphics.getHeight()- Gdx.input.getY() < START_BUTTON_HEIGHT + START_BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > START_BUTTON_HEIGHT){
-            batch.draw(playActive,xStart,yStart,START_BUTTON_WIDTH,START_BUTTON_HEIGHT);
+        if(Gdx.input.getX() < xTryAgain + TRYAGAIN_BUTTON_WIDTH && Gdx.input.getX() > xTryAgain && Gdx.graphics.getHeight() - Gdx.input.getY()- TRYAGAIN_BUTTON_HEIGHT < TRYAGAIN_BUTTON_HEIGHT*2 && Gdx.graphics.getHeight() - Gdx.input.getY() > TRYAGAIN_BUTTON_HEIGHT*2){
+            batch.draw(tryAgainActive,xTryAgain,yTryAgain,TRYAGAIN_BUTTON_WIDTH,TRYAGAIN_BUTTON_HEIGHT);
             if(Gdx.input.isTouched()){
                 this.dispose();
                 game.setScreen(new GameScreen(game));
             }
         } else{
-            batch.draw(playDeactive,xStart,yStart,START_BUTTON_WIDTH,START_BUTTON_HEIGHT);
+            batch.draw(tryAgainDeactive,xTryAgain,yTryAgain,TRYAGAIN_BUTTON_WIDTH,TRYAGAIN_BUTTON_HEIGHT);
 
         }
-        if(Gdx.input.getX() < xQuit + QUIT_BUTTON_WIDTH && Gdx.input.getX() > xQuit && Gdx.graphics.getHeight()- Gdx.input.getY() < QUIT_BUTTON_HEIGHT + QUIT_BUTTON_HEIGHT && Gdx.graphics.getHeight() -  Gdx.input.getY() > QUIT_BUTTON_HEIGHT) {
+        if(Gdx.input.getX() < xQuit + QUIT_BUTTON_WIDTH && Gdx.input.getX() > xQuit && Gdx.graphics.getHeight()- Gdx.input.getY() < QUIT_BUTTON_HEIGHT + QUIT_BUTTON_HEIGHT && Gdx.graphics.getHeight() -  Gdx.input.getY() > QUIT_BUTTON_HEIGHT){
             batch.draw(exitActive, xQuit, yQuit, QUIT_BUTTON_WIDTH, QUIT_BUTTON_HEIGHT);
             if(Gdx.input.isTouched()){
                 game.setScreen(new MainMenuScreen(game));
@@ -93,7 +95,7 @@ public class GameOverScreen implements Screen {
 
         }
 
-        batch.draw(gameOverBanner,Gdx.graphics.getWidth()/2 - BANNER_WIDTH / 2,Gdx.graphics.getHeight() -BANNER_HEIGHT- 15,BANNER_WIDTH,BANNER_HEIGHT);
+        batch.draw(gameOverBanner,centreWidth - BANNER_WIDTH/2,centreHeight -50 ,BANNER_WIDTH,BANNER_HEIGHT);
         camera.update();
         batch.end();
     }

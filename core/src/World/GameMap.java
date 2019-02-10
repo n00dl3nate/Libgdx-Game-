@@ -38,14 +38,6 @@ public abstract class GameMap {
             camera.position.set(position);
             camera.update();
         }
-
-//        Entities Player = entities.get(0);
-//        for (int j = 1; j < entities.size() ; j++) {
-//            if(Player.getCollisionRect().collidesWith(entities.get(j).getCollisionRect())){
-//                System.out.println("hit");
-//                screen.gameOver();
-//            }
-//        }
     }
 
     public void update (float delta,GameScreen screen) {
