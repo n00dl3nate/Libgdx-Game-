@@ -1,4 +1,4 @@
-package Entity;
+package Entities;
 
 import World.GameMap;
 import com.badlogic.gdx.Gdx;
@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
-import tools.CollisionRect;
 
 public class Player extends Entity {
 
@@ -49,8 +47,12 @@ public class Player extends Entity {
         jumpAnimation = new Animation(1f / 10f, textureAtlas2.findRegions("adventurer-jump-00"));
         fallAnimation = new Animation(1f / 10f, textureAtlas2.findRegions("adventurer-fall-00"));
         previousPosition = new Vector2();
+        this.health = 6;
     }
 
+    public State getCurrentState() {
+        return currentState;
+    }
 
     @Override
     public void update(float deltaTime, float gravity) {
@@ -83,6 +85,14 @@ public class Player extends Entity {
         if (!grounded && this.pos.y < previousPosition.y) {
             currentState = State.FALLING;
         }
+    }
+
+    public static int getSPEED() {
+        return SPEED;
+    }
+
+    public static int getJumpVelocity() {
+        return JUMP_VELOCITY;
     }
 
     public TextureRegion GetAnimationType() {

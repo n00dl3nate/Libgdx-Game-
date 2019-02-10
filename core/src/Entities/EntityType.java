@@ -1,4 +1,4 @@
-package Entity;
+package Entities;
 
 import World.GameMap;
 import com.badlogic.gdx.Gdx;
@@ -50,7 +50,7 @@ public enum EntityType {
             entity.create(entitySnapshot, type, map);
             return entity;
         } catch (ReflectionException e) {
-            Gdx.app.error("Entity Loader", "Could not load entity of type " + type.id);
+            Gdx.app.error("Entities Loader", "Could not load entity of type " + type.id);
             return null;
         }
     }

@@ -1,5 +1,8 @@
 package World;
 
+import Screens.GameScreen;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -8,11 +11,13 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import javafx.scene.control.Cell;
+import me.n00dl3nate.SideScrollingGame;
 
 public class TiledGameMap extends GameMap {
 
     TiledMap tiledMap;
     OrthogonalTiledMapRenderer tiledMapRender;
+
 
 
     public TiledGameMap() {
@@ -21,18 +26,18 @@ public class TiledGameMap extends GameMap {
     }
 
     @Override
-    public void render(OrthographicCamera camera, SpriteBatch batch) {
+    public void render(OrthographicCamera camera, SpriteBatch batch, SideScrollingGame game,GameScreen screen) {
         tiledMapRender.setView(camera);
         tiledMapRender.render();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        super.render(camera,batch);
+        super.render(camera,batch,game,screen);
         batch.end();
     }
 
     @Override
-    public void update(float delta) {
-        super.update(delta);
+    public void update(float delta,GameScreen screen) {
+        super.update(delta,screen);
     }
 
     @Override

@@ -1,13 +1,14 @@
 package World;
 
-import Entity.Entity;
+import Entities.Entity;
+import Screens.GameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import Entity.Entityloader;
-import Entity.Player;
+import Entities.Entityloader;
 import com.badlogic.gdx.math.Vector3;
+import me.n00dl3nate.SideScrollingGame;
 
 
 import java.util.ArrayList;
@@ -24,17 +25,11 @@ public abstract class GameMap {
 
     }
 
-    public void render (OrthographicCamera camera, SpriteBatch batch){
-        for (int i = 0; i < entities.size()-1 ; i++) {
-            for (int j = 1; j < entities.size() ; j++) {
-                if(entities.get(i).getCollisionRect().collidesWith(entities.get(j).getCollisionRect())){
-                    System.out.println("hit");
-                }
+    public ArrayList<Entity> getEntities() {
+        return entities;
+    }
 
-            }
-            }
-
-
+    public void render (OrthographicCamera camera, SpriteBatch batch, SideScrollingGame game, GameScreen screen){
         for (Entity entity : entities){
             entity.render(batch);
             Vector3 position = camera.position;
@@ -44,19 +39,26 @@ public abstract class GameMap {
             camera.update();
         }
 
+//        Entities Player = entities.get(0);
+//        for (int j = 1; j < entities.size() ; j++) {
+//            if(Player.getCollisionRect().collidesWith(entities.get(j).getCollisionRect())){
+//                System.out.println("hit");
+//                screen.gameOver();
+//            }
+//        }
     }
 
-    public void update (float delta) {
+    public void update (float delta,GameScreen screen) {
         for (Entity entity : entities) {
             entity.update(delta, -9.8f);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
             Entityloader.saveEntities("basic", entities);
         }
+
     }
     public void dispose (){
         Entityloader.saveEntities("basic",entities);
-
     }
 
     /**

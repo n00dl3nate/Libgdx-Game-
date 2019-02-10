@@ -1,26 +1,29 @@
-package Entity;
+package Entities;
 
 import World.GameMap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import tools.CollisionRect;
 
+import java.util.Timer;
+
 public abstract class Entity {
 
     protected Vector2 pos;
     protected EntityType type;
-    protected float velocityY = 0;
+    public float velocityY = 0;
     protected GameMap map;
     protected boolean grounded = false;
     private CollisionRect rect;
+    private Timer timer;
+    protected int health;
 
 
     public void create(EntitySnapShot snapShot,EntityType type, GameMap map) {
         this.pos = new Vector2(snapShot.getX(), snapShot.getY());
         this.type = type;
         this.map = map;
-        this.rect = new CollisionRect(pos.x, pos.y, type.getWidth(), type.getHeight());
-
+        this.rect = new CollisionRect(pos.x, pos.y, type.getWidth()-25, type.getHeight());
     }
 
     public void update (float deltaTime, float gravity) {
@@ -42,14 +45,42 @@ public abstract class Entity {
 
     }
 
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public float getVelocityY() {
+        return velocityY;
+    }
+
+    public void setVelocityY(float velocityY) {
+        this.velocityY = velocityY;
+    }
+
     public abstract void render (SpriteBatch batch);
 
-    protected void moveX (float amount) {
+    public void moveX (float amount) {
         float newX = this.pos.x + amount;
         if(!map.doesReactCollideWithMap(newX,pos.y,getWidth(),getHeight())){
             this.pos.x = newX;
         }
     }
+
+    public void CollideHit(float amountX ){
+        System.out.println(amountX);
+        for (int i = 0; i <50 ; i++) {
+            float newX = this.pos.x + amountX;
+            if(!map.doesReactCollideWithMap(newX,pos.y,getWidth(),getHeight())){
+                this.pos.x = newX;
+            }
+        }
+    }
+
+
 
     public CollisionRect getCollisionRect(){
         return rect;

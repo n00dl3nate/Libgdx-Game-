@@ -1,4 +1,4 @@
-package Entity;
+package Entities;
 
 import World.GameMap;
 import com.badlogic.gdx.Gdx;
@@ -6,8 +6,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 
 import java.util.ArrayList;
-
-import static com.badlogic.gdx.net.HttpRequestBuilder.json;
 
 public class Entityloader {
 

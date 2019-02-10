@@ -1,13 +1,11 @@
-package Entity;
+package Entities;
 
 import World.GameMap;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import tools.CollisionRect;
 
@@ -23,6 +21,7 @@ public class PatrolBot extends Entity {
     private Array<TextureAtlas.AtlasRegion> idleRegions;
     private Timer timer = new Timer("Timer");
     public int movement;
+    private CollisionRect rect;
 
     private float elapsedTime = 0f;
 
@@ -33,14 +32,15 @@ public class PatrolBot extends Entity {
         idleRegions = textureAtlas.findRegions("azul");
         animation = new Animation(1f/5f, idleRegions);
         movement = 0;
+        this.rect = new CollisionRect(pos.x, pos.y, type.getWidth()-10, type.getHeight()-20);
+
 
     }
 
     @Override
     public void update(float deltaTime, float gravity) {
         float newY = pos.y;
-
-
+        rect.move(this.pos.x, this.pos.y);
         this.velocityY += gravity * deltaTime * getWeight();
         newY += this.velocityY * deltaTime;
 
@@ -65,6 +65,9 @@ public class PatrolBot extends Entity {
         TextureRegion currentFrame = animation.getKeyFrame(elapsedTime, true);
         batch.draw(currentFrame,pos.x,pos.y,getWidth(),getHeight());
 
+    }
+    public CollisionRect getCollisionRect(){
+        return rect;
     }
 
     @Override

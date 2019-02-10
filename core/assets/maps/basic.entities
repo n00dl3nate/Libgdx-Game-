@@ -1,14 +1,14 @@
 [
 {
-	class: Entity.EntitySnapShot
+	class: Entities.EntitySnapShot
 	type: blueBot
 	x: 4928
 	y: 2432
 }
 {
-	class: Entity.EntitySnapShot
+	class: Entities.EntitySnapShot
 	type: player
-	x: 1300
-	y: 1900
+	x: 4800
+	y: 2432
 }
 ]
