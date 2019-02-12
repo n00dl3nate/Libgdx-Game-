@@ -29,7 +29,7 @@ public abstract class GameMap {
         return entities;
     }
 
-    public void render (OrthographicCamera camera, SpriteBatch batch, SideScrollingGame game, GameScreen screen){
+    public void render (OrthographicCamera camera, SpriteBatch batch, SideScrollingGame game){
         for (Entity entity : entities){
             entity.render(batch);
             Vector3 position = camera.position;

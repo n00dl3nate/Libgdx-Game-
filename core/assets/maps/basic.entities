@@ -2,13 +2,49 @@
 {
 	class: Entities.EntitySnapShot
 	type: blueBot
-	x: 4928
+	x: 7136
+	y: 2208
+}
+{
+	class: Entities.EntitySnapShot
+	type: blueBot
+	x: 6912
+	y: 2208
+}
+{
+	class: Entities.EntitySnapShot
+	type: blueBot
+	x: 6688
+	y: 2208
+}
+{
+	class: Entities.EntitySnapShot
+	type: blueBot
+	x: 6496
+	y: 2208
+}
+{
+	class: Entities.EntitySnapShot
+	type: blueBot
+	x: 5728
+	y: 2464
+}
+{
+	class: Entities.EntitySnapShot
+	type: blueBot
+	x: 6112
+	y: 2208
+}
+{
+	class: Entities.EntitySnapShot
+	type: blueBot
+	x: 4960
 	y: 2432
 }
 {
 	class: Entities.EntitySnapShot
 	type: player
-	x: 4800
-	y: 2432
+	x: 1216
+	y: 1920
 }
 ]

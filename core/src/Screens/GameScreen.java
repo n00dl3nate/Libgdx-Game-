@@ -13,10 +13,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+
 import me.n00dl3nate.SideScrollingGame;
 import sun.invoke.empty.Empty;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameScreen implements Screen {
 
@@ -27,6 +30,8 @@ public class GameScreen implements Screen {
     public Boolean isPlayerDead;
     public SpriteBatch batch;
     public Entity player;
+    private Boolean justhit;
+
     private Texture fullHeart;
     private Texture halfHeart;
     private Texture emptyHeart;
@@ -40,6 +45,7 @@ public class GameScreen implements Screen {
 
 
 
+
     public GameScreen(final SideScrollingGame game){
         this.game = game;
         isPlayerDead = false;
@@ -47,6 +53,7 @@ public class GameScreen implements Screen {
         fullHeart = new Texture("HealthHeartPixelArt/Full_Heart.png");
         halfHeart = new Texture("HealthHeartPixelArt/Half_Heart.png");
         emptyHeart = new Texture("HealthHeartPixelArt/Empty_Heart.png");
+        justhit = false;
     }
 
     @Override
@@ -63,7 +70,7 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         gameMap.update(Gdx.graphics.getDeltaTime(),this);
-        gameMap.render(cam, game.batch,this.game,this);
+        gameMap.render(cam, game.batch,this.game);
 
         entities = gameMap.getEntities();
 
@@ -82,14 +89,18 @@ public class GameScreen implements Screen {
         }
 
         for (int j = 0; j < entities.size(); j++) {
-            if(player.getCollisionRect().collidesWith(entities.get(j).getCollisionRect()) && entities.get(j).getType() == EntityType.BlueBot){
+            if(!player.getCollisionRect().collidesWith(entities.get(j).getCollisionRect())){
+                justhit = false;
+            }
+
+            if(player.getCollisionRect().collidesWith(entities.get(j).getCollisionRect()) && entities.get(j).getType() == EntityType.BlueBot && justhit == false){
                 player.setHealth(player.getHealth()-1);
-                System.out.println(player.getHealth());
+                justhit = true;
                 if(player.getX() <= entities.get(j).getX()){
                     player.setVelocityY(3f * player.getWeight());
                     player.CollideHit((-20f * delta));
                 }
-                else if(player.getX() > entities.get(j).getX()-20){
+                else if(player.getX() > entities.get(j).getX()-30){
                     player.setVelocityY(3f * player.getWeight());
                     player.CollideHit((20f * delta));
                 }
@@ -101,7 +112,6 @@ public class GameScreen implements Screen {
         int Hitpoints = 0;
         int Distance = 0;
         for (int i = 0; i < 3 ; i++) {
-
             if(player.getHealth() > 1 + Hitpoints){
                 game.batch.draw(fullHeart,player.getX() + HEARTS_POSTION_X + Distance,player.getY() + HEARTS_POSTION_Y,HEARTS_WIDTH,HEARTS_HEIGHT);
             } else if(player.getHealth() == 1 + Hitpoints){
@@ -112,13 +122,13 @@ public class GameScreen implements Screen {
             Distance += heartDistance;
             Hitpoints += 2;
         }
-
-
         cam.update();
         game.batch.end();
     }
 
-
+    public Entity getPlayer() {
+        return player;
+    }
 
     @Override
     public void resize(int width, int height) {

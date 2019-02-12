@@ -56,6 +56,7 @@ public class Player extends Entity {
 
     @Override
     public void update(float deltaTime, float gravity) {
+
         previousPosition.x = this.pos.x;
         previousPosition.y = this.pos.y;
         previousState = currentState;
@@ -85,6 +86,8 @@ public class Player extends Entity {
         if (!grounded && this.pos.y < previousPosition.y) {
             currentState = State.FALLING;
         }
+        this.checkNextTileRight();
+        this.checkNextTileLeft();
     }
 
     public static int getSPEED() {
@@ -130,6 +133,20 @@ public class Player extends Entity {
         } else if (this.pos.x < previousPosition.x) {
             runningRight = false;
         }
+    }
+
+    public boolean checkNextTileLeft(){
+        if(map.doesReactCollideWithMap(pos.x - 32, pos.y - 32, getWidth(), getHeight())){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkNextTileRight(){
+        if(map.doesReactCollideWithMap(pos.x + 32, pos.y - 32, getWidth(), getHeight())){
+            return true;
+        }
+        return false;
     }
 
 

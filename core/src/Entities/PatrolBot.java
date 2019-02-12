@@ -14,27 +14,24 @@ import java.util.Timer;
 public class PatrolBot extends Entity {
 
     private static final int SPEED = 80;
-    private static final int JUMP_VELOCITY = 5;
+    private static final int TILE_SIZE = 32;
 
     private TextureAtlas textureAtlas;
     private Animation<TextureRegion> animation;
     private Array<TextureAtlas.AtlasRegion> idleRegions;
-    private Timer timer = new Timer("Timer");
     public int movement;
     private CollisionRect rect;
+    private boolean movingRight;
 
     private float elapsedTime = 0f;
 
     public void create (EntitySnapShot snapShot, EntityType type, GameMap map) {
         super.create(snapShot, type, map);
-
         textureAtlas = new TextureAtlas(Gdx.files.internal("BlueBotSpriteSheet/Spritesheet.atlas"));
         idleRegions = textureAtlas.findRegions("azul");
         animation = new Animation(1f/5f, idleRegions);
-        movement = 0;
-        this.rect = new CollisionRect(pos.x, pos.y, type.getWidth()-10, type.getHeight()-20);
-
-
+        this.rect = new CollisionRect(pos.x, pos.y, type.getWidth()-15, type.getHeight()-20);
+        this.movingRight = true;
     }
 
     @Override
@@ -54,8 +51,7 @@ public class PatrolBot extends Entity {
             this.pos.y = newY;
             grounded = false;
         }
-
-        moveAmount(150,deltaTime);
+        move(deltaTime);
     }
 
 
@@ -76,18 +72,34 @@ public class PatrolBot extends Entity {
         return snapShot;
     }
 
-    public void moveAmount(int amount, float deltaTime){
-        if(movement < amount){
+    public void move(float deltaTime){
+
+        if(movingRight){
             moveX(SPEED * deltaTime);
-            movement += 1;
-        }
-        if(movement >= amount && movement < amount*2){
+        } else {
             moveX(-SPEED * deltaTime);
-            movement += 1;
         }
-        if(movement >= amount*2){
-            movement = 0;
+
+        if(!checkNextTileRight()){
+            movingRight=false;
         }
+        if(!checkNextTileLeft()){
+            movingRight=true;
+        }
+    }
+
+    public boolean checkNextTileLeft(){
+        if(map.doesReactCollideWithMap(pos.x - (getWidth()/2), pos.y - (getWidth()/2), getWidth(), getHeight())){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkNextTileRight(){
+        if(map.doesReactCollideWithMap(pos.x + (getWidth()/2), pos.y - (getWidth()/2), getWidth(), getHeight())){
+            return true;
+        }
+        return false;
     }
 
     public void dispose(){

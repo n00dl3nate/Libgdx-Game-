@@ -26,12 +26,12 @@ public class TiledGameMap extends GameMap {
     }
 
     @Override
-    public void render(OrthographicCamera camera, SpriteBatch batch, SideScrollingGame game,GameScreen screen) {
+    public void render(OrthographicCamera camera, SpriteBatch batch, SideScrollingGame game) {
         tiledMapRender.setView(camera);
         tiledMapRender.render();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        super.render(camera,batch,game,screen);
+        super.render(camera,batch,game);
         batch.end();
     }
 

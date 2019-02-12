@@ -20,10 +20,12 @@ public class MainMenuScreen implements Screen {
     Texture exitDeactive;
     Texture playActive;
     Texture playDeactive;
+    Texture backGround;
     public SpriteBatch batch;
 
     public MainMenuScreen(SideScrollingGame game) {
         this.game = game;
+        backGround = new Texture("Background.jpg");
         playActive = new Texture("buttons/Start.png");
         playDeactive = new Texture("buttons/StartActivate.png");
         exitDeactive = new Texture("buttons/QuitActivate.png");
@@ -50,6 +52,8 @@ public class MainMenuScreen implements Screen {
         int xStart = centreWidth - 260;
         int yStart = centreHeight - 170;
 
+        batch.draw(backGround,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+
         if(Gdx.input.getX() < xStart + START_BUTTON_WIDTH && Gdx.input.getX() > xStart && Gdx.graphics.getHeight()- Gdx.input.getY() < START_BUTTON_HEIGHT + START_BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > START_BUTTON_HEIGHT){
             batch.draw(playActive,xStart,yStart,START_BUTTON_WIDTH,START_BUTTON_HEIGHT);
             if(Gdx.input.isTouched()){
@@ -69,6 +73,7 @@ public class MainMenuScreen implements Screen {
             batch.draw(exitDeactive, xQuit, yQuit, QUIT_BUTTON_WIDTH, QUIT_BUTTON_HEIGHT);
 
         }
+
 
         batch.end();
 
