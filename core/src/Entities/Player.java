@@ -30,10 +30,7 @@ public class Player extends Entity {
     private Animation<TextureRegion> fallAnimation;
 
     private Vector2 previousPosition;
-    private float stateTimer;
     private boolean runningRight;
-    private boolean isDead;
-
 
     private float elapsedTime = 0f;
 

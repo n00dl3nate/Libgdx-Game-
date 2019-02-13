@@ -12,7 +12,8 @@ import java.util.HashMap;
 public enum EntityType {
 
     Player("player",Player.class ,75,55,40),
-    BlueBot("blueBot",PatrolBot.class ,32,32,40);
+    BlueBot("blueBot",PatrolBot.class ,32,32,40),
+    GoldCoin("goldCoin",GoldCoin.class,16,16,40);
 
     private String id;
     private Class<? extends Entity> loaderClass;

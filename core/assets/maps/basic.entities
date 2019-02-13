@@ -43,6 +43,12 @@
 }
 {
 	class: Entities.EntitySnapShot
+	type: goldCoin
+	x: 1230
+	y: 1920
+}
+{
+	class: Entities.EntitySnapShot
 	type: player
 	x: 1216
 	y: 1920
