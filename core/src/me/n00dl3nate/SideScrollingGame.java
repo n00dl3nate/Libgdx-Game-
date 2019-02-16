@@ -1,7 +1,5 @@
 package me.n00dl3nate;
 
-import Screens.GameOverScreen;
-import Screens.GameScreen;
 import Screens.MainMenuScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

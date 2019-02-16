@@ -18,19 +18,43 @@ import java.util.ArrayList;
 public abstract class GameMap {
 
     protected ArrayList<Entity> entities;
+    protected ArrayList<Entity> bluePatrolBots;
+    protected ArrayList<Entity> players;
+    protected ArrayList<Entity> coins;
 
     public GameMap() {
         entities = new ArrayList<Entity>();
         entities.addAll(Entityloader.loadEntities("basic",this, entities));
 
+        bluePatrolBots = new ArrayList<Entity>();
+        bluePatrolBots.addAll(Entityloader.loadEntities("blueBots",this, bluePatrolBots));
+        players = new ArrayList<Entity>();
+        players.addAll(Entityloader.loadEntities("players",this, players));
+        coins = new ArrayList<Entity>();
+        coins.addAll(Entityloader.loadEntities("coins",this, coins));
+
+
     }
 
-    public ArrayList<Entity> getEntities() {
-        return entities;
+    public ArrayList<Entity> getBluePatrolBots() {
+        return bluePatrolBots;
+    }
+
+    public ArrayList<Entity> getPlayers() {
+        return players;
+    }
+
+    public ArrayList<Entity> getCoins() {
+        return coins;
     }
 
     public void render (OrthographicCamera camera, SpriteBatch batch, SideScrollingGame game){
-        for (Entity entity : entities){
+        for (Entity entity : bluePatrolBots){
+            entity.render(batch);
+//
+        }
+
+        for (Entity entity : players){
             entity.render(batch);
             Vector3 position = camera.position;
             position.x = entity.getPos().x;
@@ -38,12 +62,29 @@ public abstract class GameMap {
             camera.position.set(position);
             camera.update();
         }
+
+        for (Entity entity : coins){
+            entity.render(batch);
+        }
     }
 
     public void update (float delta,GameScreen screen) {
         for (Entity entity : entities) {
             entity.update(delta, -9.8f);
         }
+
+        for (Entity entity : bluePatrolBots) {
+            entity.update(delta, -9.8f);
+        }
+
+        for (Entity entity : players) {
+            entity.update(delta, -9.8f);
+        }
+
+        for (Entity entity : coins) {
+            entity.update(delta, -9.8f);
+        }
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
             Entityloader.saveEntities("basic", entities);
         }

@@ -17,6 +17,7 @@ public abstract class Entity {
     private CollisionRect rect;
     private Timer timer;
     protected int health;
+    protected int coins;
 
 
     public void create(EntitySnapShot snapShot,EntityType type, GameMap map) {
@@ -43,6 +44,14 @@ public abstract class Entity {
             grounded = false;
         }
 
+    }
+
+    public int getCoins() {
+        return coins;
+    }
+
+    public void setCoins(int coins) {
+        this.coins = coins;
     }
 
     public int getHealth() {
@@ -79,8 +88,6 @@ public abstract class Entity {
             }
         }
     }
-
-
 
     public CollisionRect getCollisionRect(){
         return rect;

@@ -62,6 +62,7 @@ public class PatrolBot extends Entity {
         batch.draw(currentFrame,pos.x,pos.y,getWidth(),getHeight());
 
     }
+
     public CollisionRect getCollisionRect(){
         return rect;
     }

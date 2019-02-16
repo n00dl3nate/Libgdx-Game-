@@ -1,10 +1,7 @@
 package Screens;
 
 import Entities.Entity;
-import Entities.EntityType;
-import Entities.Player;
 import World.GameMap;
-import World.TileType;
 import World.TiledGameMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -12,21 +9,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
-
 import me.n00dl3nate.SideScrollingGame;
-import sun.invoke.empty.Empty;
-
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class GameScreen implements Screen {
 
     OrthographicCamera cam;
     GameMap gameMap;
     final SideScrollingGame game;
-    protected ArrayList<Entity> entities;
     public Boolean isPlayerDead;
     public SpriteBatch batch;
     public Entity player;
@@ -42,9 +32,9 @@ public class GameScreen implements Screen {
     private static final int HEARTS_HEIGHT = 96;
     private int heartDistance = 48;
 
-
-
-
+    protected ArrayList<Entity> bluePatrolBots;
+    protected ArrayList<Entity> players;
+    protected ArrayList<Entity> coins;
 
     public GameScreen(final SideScrollingGame game){
         this.game = game;
@@ -60,7 +50,6 @@ public class GameScreen implements Screen {
     public void show() {
         cam = new OrthographicCamera();
         cam.setToOrtho(false, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-//        cam.zoom -= .05;
         gameMap = new TiledGameMap();
     }
 
@@ -72,15 +61,13 @@ public class GameScreen implements Screen {
         gameMap.update(Gdx.graphics.getDeltaTime(),this);
         gameMap.render(cam, game.batch,this.game);
 
-        entities = gameMap.getEntities();
 
-        for (int i = 0; i < entities.size() ; i++) {
-            if(entities.get(i).getType() == EntityType.Player){
-                player = entities.get(i);
-            }
-        }
+        bluePatrolBots = gameMap.getBluePatrolBots();
+        coins = gameMap.getCoins();
+        players = gameMap.getPlayers();
+        player = players.get(0);
 
-
+//        cam.translate(player.getPos());
 
         if(player.getY() < 160 || player.getHealth() <= 0 ){
             this.dispose();
@@ -88,22 +75,26 @@ public class GameScreen implements Screen {
             return;
         }
 
-        for (int j = 0; j < entities.size(); j++) {
-            if(!player.getCollisionRect().collidesWith(entities.get(j).getCollisionRect())){
+        for (int j = 0; j < bluePatrolBots.size(); j++) {
+            if(!player.getCollisionRect().collidesWith(bluePatrolBots.get(j).getCollisionRect())){
                 justhit = false;
             }
-
-            if(player.getCollisionRect().collidesWith(entities.get(j).getCollisionRect()) && entities.get(j).getType() == EntityType.BlueBot && justhit == false){
-                player.setHealth(player.getHealth()-1);
+            if(player.getCollisionRect().collidesWith(bluePatrolBots.get(j).getCollisionRect()) && justhit == false) {
+                player.setHealth(player.getHealth() - 1);
                 justhit = true;
-                if(player.getX() <= entities.get(j).getX()){
+                if (player.getX() <= bluePatrolBots.get(j).getX()) {
                     player.setVelocityY(3f * player.getWeight());
                     player.CollideHit((-20f * delta));
-                }
-                else if(player.getX() > entities.get(j).getX()-30){
+                } else if (player.getX() > bluePatrolBots.get(j).getX() - 30) {
                     player.setVelocityY(3f * player.getWeight());
                     player.CollideHit((20f * delta));
                 }
+            }
+        }
+        for (int j = 0; j < coins.size(); j++) {
+            if (player.getCollisionRect().collidesWith(coins.get(j).getCollisionRect())) {
+                coins.remove(coins.get(j));
+                player.setCoins(player.getCoins() + 1);
             }
         }
 

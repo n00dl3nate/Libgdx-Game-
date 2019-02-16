@@ -1,0 +1,8 @@
+[
+{
+	class: Entities.EntitySnapShot
+	type: goldCoin
+	x: 1400
+	y: 1920
+}
+]

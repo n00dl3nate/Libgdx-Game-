@@ -31,7 +31,6 @@ public class Player extends Entity {
 
     private Vector2 previousPosition;
     private boolean runningRight;
-
     private float elapsedTime = 0f;
 
     public void create(EntitySnapShot snapShot, EntityType type, GameMap map) {
@@ -44,6 +43,7 @@ public class Player extends Entity {
         jumpAnimation = new Animation(1f / 10f, textureAtlas2.findRegions("adventurer-jump-00"));
         fallAnimation = new Animation(1f / 10f, textureAtlas2.findRegions("adventurer-fall-00"));
         previousPosition = new Vector2();
+        this.coins = 0;
         this.health = 6;
     }
 
@@ -160,5 +160,7 @@ public class Player extends Entity {
     public EntitySnapShot getSaveSnapshot() {
         EntitySnapShot snapShot = super.getSaveSnapshot();
         return snapShot;
-    };
+    }
+
+
 }
