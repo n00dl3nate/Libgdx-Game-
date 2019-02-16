@@ -24,7 +24,6 @@ public abstract class GameMap {
 
     public GameMap() {
         entities = new ArrayList<Entity>();
-        entities.addAll(Entityloader.loadEntities("basic",this, entities));
 
         bluePatrolBots = new ArrayList<Entity>();
         bluePatrolBots.addAll(Entityloader.loadEntities("blueBots",this, bluePatrolBots));
@@ -32,7 +31,6 @@ public abstract class GameMap {
         players.addAll(Entityloader.loadEntities("players",this, players));
         coins = new ArrayList<Entity>();
         coins.addAll(Entityloader.loadEntities("coins",this, coins));
-
 
     }
 
@@ -51,28 +49,21 @@ public abstract class GameMap {
     public void render (OrthographicCamera camera, SpriteBatch batch, SideScrollingGame game){
         for (Entity entity : bluePatrolBots){
             entity.render(batch);
-//
         }
-
         for (Entity entity : players){
             entity.render(batch);
             Vector3 position = camera.position;
             position.x = entity.getPos().x;
             position.y = entity.getPos().y;
-            camera.position.set(position);
+            camera.position.lerp(position,0.1f);
             camera.update();
         }
-
         for (Entity entity : coins){
             entity.render(batch);
         }
     }
 
     public void update (float delta,GameScreen screen) {
-        for (Entity entity : entities) {
-            entity.update(delta, -9.8f);
-        }
-
         for (Entity entity : bluePatrolBots) {
             entity.update(delta, -9.8f);
         }
@@ -94,26 +85,11 @@ public abstract class GameMap {
         Entityloader.saveEntities("basic",entities);
     }
 
-    /**
-     * Gets a tile by pixel Location within the SideScrollingGame world
-     * @param layer
-     * @param x
-     * @param y
-     * @return
-     */
 
     public TileType getTileTypeByLocation(int layer,float x,float y){
         return  this.getTileTypeByCoordinate(layer, (int) (x/TileType.TILE_SIZE), (int) (y/TileType.TILE_SIZE));
     }
 
-
-    /**
-     * Gets a tile at its coordinate within the map at a specified Layer.
-     * @param layer
-     * @param col
-     * @param row
-     * @return
-     */
     public abstract  TileType getTileTypeByCoordinate(int layer,int col,int row);
 
     public boolean doesReactCollideWithMap(float x,float y, int width, int height){
